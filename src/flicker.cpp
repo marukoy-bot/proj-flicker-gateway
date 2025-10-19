@@ -29,6 +29,7 @@
 #define flicker_id "flicker00"
 
 // flags
+bool flag0_idle = true;
 bool flag1_env_alert = false;
 bool flag2_co_alert = false;
 bool flag3_smoke_alert = false;
@@ -81,7 +82,7 @@ void showStats();
 void updateSensors();
 void testTransmit();
 void updateLEDs() {
-    digitalWrite(led_green, flag1_env_alert);
+    digitalWrite(led_green, (flag0_idle || flag1_env_alert));
     digitalWrite(led_yellow, flag2_co_alert);
     digitalWrite(led_red, flag3_smoke_alert);
 }
@@ -227,28 +228,28 @@ void loop() {
         }
     }    
 
-    unsigned long elapsed = millis() - prev_millis;
+    // unsigned long elapsed = millis() - prev_millis;
 
-    if (fading_up) {
-        brightness = map(elapsed, 0, fade_interval, 0, 255);
+    // if (fading_up) {
+    //     brightness = map(elapsed, 0, fade_interval, 0, 255);
 
-        if (elapsed >= fade_interval) {
-            brightness = 255;
-            fading_up = false;
-            prev_millis = millis();
-        }
-    }
-    else {
-        brightness = map(elapsed, 0, fade_interval, 255, 0);
+    //     if (elapsed >= fade_interval) {
+    //         brightness = 255;
+    //         fading_up = false;
+    //         prev_millis = millis();
+    //     }
+    // }
+    // else {
+    //     brightness = map(elapsed, 0, fade_interval, 255, 0);
 
-        if (elapsed >= fade_interval) {
-            brightness = 0;
-            fading_up = true;
-            prev_millis = millis();
-        }
-    }
+    //     if (elapsed >= fade_interval) {
+    //         brightness = 0;
+    //         fading_up = true;
+    //         prev_millis = millis();
+    //     }
+    // }
 
-    analogWrite(2, brightness);
+    // analogWrite(2, brightness);
 
     getPMSData();
     if (pms_1 != 0.0 && pms_2_5 != 0.0 && pms_10 != 0.0 && !pms_valid) {
