@@ -388,7 +388,7 @@ void sendLoRaMessage(String message) {
     Serial.println("Time on Air: " + String(last_ToA) + " μs");
 }
 
-float peak_pms_1 = 0, peak_pms_2_5 = 0, peak_pms_10 = 0, peak_co_voltage = 0, peak_co_ppm = 0, peak_temp = 0, peak_hum = 0;
+float peak_pms_1 = 0, peak_pms_2_5 = 0, peak_pms_10 = 0, peak_co_voltage = 0, peak_co_ppm = 0, peak_temp = 0, lowest_hum = 0;
 void showStats() {
     Serial.println("PMS data valid time: " + String(pms_data_valid_time / 1000.0) + " s");
     Serial.println("PM 1.0 (ug/m3):\t\t" + String(pms_1) + "\tPeak: " + String(peak_pms_1));
@@ -397,7 +397,7 @@ void showStats() {
     Serial.println("voltage (v):\t\t" + String(co_voltage) + "\tPeak: " + String(peak_co_voltage));
     Serial.println("ppm:\t\t\t" + String(co_ppm) + "\tPeak: " + String(peak_co_ppm));
     Serial.println("temperature (°C):\t" + String(bme_temperature) + "\tPeak: " + String(peak_temp));
-    Serial.println("humidity (%):\t\t" + String(bme_humidity) + "\tPeak: " + String(peak_hum));
+    Serial.println("humidity (%):\t\t" + String(bme_humidity) + "\tlowest: " + String(lowest_hum));
     Serial.println("Last ToA:\t\t" + String(last_ToA) + " μs");
     Serial.println("Flags:\t\t\t" + String(flag1_env_alert) + "-" + String(flag2_co_alert) + "-" +String(flag3_smoke_alert));
     Serial.println("Sampling Interval:\t" + String(sampleTimerInterval) + " ms");
@@ -421,6 +421,6 @@ void showStats() {
     if (bme_temperature > peak_temp)
         peak_temp = bme_temperature;
 
-    if (bme_humidity > peak_hum)
-        peak_hum = bme_humidity; 
+    if (bme_humidity < lowest_hum)
+        lowest_hum = bme_humidity; 
 }
