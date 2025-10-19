@@ -187,12 +187,12 @@ void loop() {
         }
 
         // CO level; CO_ALERT
-        if (co_ppm >= CO_THRESHOLD) {
+        if (flag1_env_alert && (co_ppm >= CO_THRESHOLD)) {
             flag2_co_alert = true; // raise CO alert flag
         }
         
         // smoke presence; SMOKE_ALERT
-        if (pms_2_5 > SMOKE_THRESHOLD) {
+        if (flag2_co_alert && (pms_2_5 > SMOKE_THRESHOLD)) {
             smoke_samples++; // increment smoke samples by 1
         }
 
@@ -209,6 +209,9 @@ void loop() {
             flag2_co_alert = false;
             flag3_smoke_alert = false;
 
+            // reset sampling timer interval
+            sampleTimerInterval = 120000; // back to 2 mins sampling
+
             // transmit to LoRa
             String msg = 
                 "<" + 
@@ -220,7 +223,7 @@ void loop() {
                 ",ToA:" + String(last_ToA);
 
             sendLoRaMessage(msg);
-            delay(600000); // delay 10 mins for next transmission; prevents spamming
+            delay(300000); // delay 5 mins for next transmission; prevents spamming
         }
     }    
 
