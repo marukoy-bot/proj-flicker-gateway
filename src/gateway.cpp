@@ -163,7 +163,7 @@ void loop() {
                 //displayLCD("T:" + String(temperature) + " H:" + String(humidity), "CO:" + String(co) + " P:" + String(pm2_5), 5000);
     
                 String msg = 
-                    "[ALERT]\nTemp: " + String(temperature) + "C\n"
+                    "[ALERT]\nPossible fire, please check.\nTemp: " + String(temperature) + "C\n"
                     + "Hmd: " + String(humidity) + "%\n"
                     + "CO: " + String(co) + " ppm\n"
                     + "PM 2.5: " + String(pm2_5) + " ug/m3";
