@@ -388,7 +388,7 @@ void sendLoRaMessage(String message) {
     Serial.println("Time on Air: " + String(last_ToA) + " μs");
 }
 
-float peak_pms_1 = 0, peak_pms_2_5 = 0, peak_pms_10 = 0, peak_co_voltage = 0, peak_co_ppm = 0, peak_temp = 0, lowest_hum = 0;
+float peak_pms_1 = 0, peak_pms_2_5 = 0, peak_pms_10 = 0, peak_co_voltage = 0, peak_co_ppm = 0, peak_temp = 0, lowest_hum = 100;
 void showStats() {
     Serial.println("PMS data valid time: " + String(pms_data_valid_time / 1000.0) + " s");
     Serial.println("PM 1.0 (ug/m3):\t\t" + String(pms_1) + "\tPeak: " + String(peak_pms_1));
